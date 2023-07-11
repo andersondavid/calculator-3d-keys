@@ -27,7 +27,7 @@ export default function App() {
   }, [calcData]);
 
   return (
-    <View style={[styles.container, { backgroundColor: themeBg }]}>
+    <View style={styles.container}>
       <Display primaryData={calcData} secondaryData={result} />
       <KeyBoard state={{ calcData, setCalcData }} calculate={calculate} />
     </View>
