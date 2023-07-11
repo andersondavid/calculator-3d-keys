@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Touchable,
   TouchableHighlight,
 } from "react-native";
 import { Shadow } from "react-native-shadow-2";
