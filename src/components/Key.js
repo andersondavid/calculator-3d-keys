@@ -1,8 +1,15 @@
-import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Touchable,
+  TouchableHighlight,
+} from "react-native";
 import { Shadow } from "react-native-shadow-2";
 import { LinearGradient } from "expo-linear-gradient";
+import { memo } from "react";
 
-export function Key({ innerText, type = "normal", handleKeyPress, keyDigit }) {
+function Key({ innerText, type = "normal", handleKeyPress, keyDigit }) {
   let customStyleKey = {};
   let customStyleText = {};
   if (type == "operation") {
@@ -11,6 +18,7 @@ export function Key({ innerText, type = "normal", handleKeyPress, keyDigit }) {
     customStyleKey = { backgroundColor: "#f59e0b", borderColor: "#fcd34d" };
     customStyleText = { color: "white" };
   }
+
 
   return (
     <View style={styles.keyContainer}>
@@ -40,6 +48,8 @@ export function Key({ innerText, type = "normal", handleKeyPress, keyDigit }) {
     </View>
   );
 }
+
+export default memo(Key, () => true);
 
 const styles = StyleSheet.create({
   shadowContainer: {
