@@ -1,14 +1,21 @@
 import { View, StyleSheet } from "react-native";
 import { Key } from "./Key";
 
-export function KeyBoard({ state }) {
+export function KeyBoard({ state, calculate }) {
   const { calcData, setCalcData } = state;
 
   function handleKeyPress(key) {
     if (key == "clear") {
       setCalcData("");
     } else if (key == "bksp") {
-      setCalcData(prev => prev.slice(0, -1))
+      setCalcData((prev) => prev.slice(0, -1));
+    } else if (key == "percent") {
+      setCalcData((prev) => {
+        const lastPercent = prev.slice(-1) / 100;
+        return prev.slice(0, -1) + lastPercent;
+      });
+    } else if (key == "equal") {
+      calculate()
     } else {
       setCalcData((prev) => prev + key);
     }
@@ -29,7 +36,12 @@ export function KeyBoard({ state }) {
           handleKeyPress={handleKeyPress}
           keyDigit="clear"
         />
-        <Key innerText="%" type="operation" />
+        <Key
+          innerText="%"
+          type="operation"
+          handleKeyPress={handleKeyPress}
+          keyDigit="percent"
+        />
         <Key
           innerText="/"
           type="operation"
