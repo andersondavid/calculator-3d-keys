@@ -1,23 +1,35 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableHighlight,
-} from "react-native";
+import { useContext } from "react";
+import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 import { LinearGradient } from "expo-linear-gradient";
-import { memo } from "react";
 
-function Key({ innerText, type = "normal", handleKeyPress, keyDigit }) {
+import { AppContext } from "../reducer/store";
+
+function Key({ innerText, style = "normal", keyDigit }) {
   let customStyleKey = {};
   let customStyleText = {};
-  if (type == "operation") {
+  if (style == "operation") {
     customStyleText = { color: "#f59e0b" };
-  } else if (type == "equal") {
+  } else if (style == "equal") {
     customStyleKey = { backgroundColor: "#f59e0b", borderColor: "#fcd34d" };
     customStyleText = { color: "white" };
   }
 
+  const { dispatch } = useContext(AppContext);
+
+  const handleKeyPress = (key) => {
+    if (keyDigit == "equal") {
+      dispatch({ type: "equal" });
+    } else if (keyDigit == "bksp") {
+      dispatch({ type: "bksp" });
+    } else if (keyDigit == "percent") {
+      dispatch({ type: "percent" });
+    } else if (keyDigit == "clear") {
+      dispatch({ type: "clear" });
+    } else {
+      dispatch({ type: "number", payload: key });
+    }
+  };
 
   return (
     <View style={styles.keyContainer}>
@@ -48,7 +60,7 @@ function Key({ innerText, type = "normal", handleKeyPress, keyDigit }) {
   );
 }
 
-export default memo(Key, () => true);
+export default Key;
 
 const styles = StyleSheet.create({
   shadowContainer: {
