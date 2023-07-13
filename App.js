@@ -1,36 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState, useReducer } from "react";
 import { View, StyleSheet } from "react-native";
 import Constants from "expo-constants";
 
-import { KeyBoard } from "./src/components/KeyBoard";
+import KeyBoard from "./src/components/KeyBoard";
 import { Display } from "./src/components/Display";
 
-import { core } from "./src/utils/core";
+import { AppContext, initialState, reducer } from "./src/reducer/store";
 
 export default function App() {
   const [calcData, setCalcData] = useState("");
   const [result, setResult] = useState("");
 
-  function calculate() {
-    const result = core(calcData);
-    setCalcData(String(result));
-    setResult("");
-  }
 
-  useEffect(() => {
-    const result = core(calcData);
-    if (result) {
-      setResult(result);
-    } else if (calcData == "") {
-      setResult("");
-    }
-  }, [calcData]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <View style={styles.container}>
-      <Display primaryData={calcData} secondaryData={result} />
-      <KeyBoard state={{ calcData, setCalcData }} calculate={calculate} />
-    </View>
+    <AppContext.Provider value={{ state, dispatch }}>
+      <View style={styles.container}>
+        <Display primaryData={calcData} secondaryData={result} />
+        <KeyBoard />
+      </View>
+    </AppContext.Provider>
   );
 }
 
