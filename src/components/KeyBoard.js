@@ -1,101 +1,135 @@
 import { View, StyleSheet } from "react-native";
-import { Key } from "./Key";
 
-export function KeyBoard({ state, calculate }) {
-  const { calcData, setCalcData } = state;
+import Key from "./Key";
 
-  function handleKeyPress(key) {
-    if (key == "clear") {
-      setCalcData("");
-    } else if (key == "bksp") {
-      setCalcData((prev) => prev.slice(0, -1));
-    } else if (key == "percent") {
-      setCalcData((prev) => {
-        const lastPercent = prev.slice(-1) / 100;
-        return prev.slice(0, -1) + lastPercent;
-      });
-    } else if (key == "equal") {
-      calculate()
-    } else {
-      setCalcData((prev) => prev + key);
-    }
-  }
+function KeyBoard() {
+
 
   return (
     <View>
       <View style={style.keyRow}>
         <Key
           innerText="<"
-          type="operation"
-          handleKeyPress={handleKeyPress}
+          style="operation"
           keyDigit="bksp"
+          key="bksp"
         />
         <Key
           innerText="C"
-          type="operation"
-          handleKeyPress={handleKeyPress}
+          style="operation"
           keyDigit="clear"
+          key="clear"
         />
         <Key
           innerText="%"
-          type="operation"
-          handleKeyPress={handleKeyPress}
+          style="operation"
           keyDigit="percent"
+          key="percent"
         />
         <Key
           innerText="/"
-          type="operation"
-          handleKeyPress={handleKeyPress}
+          style="operation"
           keyDigit="/"
+          key="/"
         />
       </View>
       <View style={style.keyRow}>
-        <Key innerText="1" handleKeyPress={handleKeyPress} keyDigit="1" />
-        <Key innerText="2" handleKeyPress={handleKeyPress} keyDigit="2" />
-        <Key innerText="3" handleKeyPress={handleKeyPress} keyDigit="3" />
+        <Key
+          innerText="1"
+          keyDigit="1"
+          key="1"
+        />
+        <Key
+          innerText="2"
+          keyDigit="2"
+          key="2"
+        />
+        <Key
+          innerText="3"
+          keyDigit="3"
+          key="3"
+        />
         <Key
           innerText="*"
-          type="operation"
-          handleKeyPress={handleKeyPress}
+          style="operation"
           keyDigit="*"
+          key="*"
         />
       </View>
       <View style={style.keyRow}>
-        <Key innerText="4" handleKeyPress={handleKeyPress} keyDigit="4" />
-        <Key innerText="5" handleKeyPress={handleKeyPress} keyDigit="5" />
-        <Key innerText="6" handleKeyPress={handleKeyPress} keyDigit="6" />
+        <Key
+          innerText="4"
+          keyDigit="4"
+          key="4"
+        />
+        <Key
+          innerText="5"
+          keyDigit="5"
+          key="5"
+        />
+        <Key
+          innerText="6"
+          keyDigit="6"
+          key="6"
+        />
         <Key
           innerText="-"
-          type="operation"
-          handleKeyPress={handleKeyPress}
+          style="operation"
           keyDigit="-"
+          key="-"
         />
       </View>
       <View style={style.keyRow}>
-        <Key innerText="7" handleKeyPress={handleKeyPress} keyDigit="7" />
-        <Key innerText="8" handleKeyPress={handleKeyPress} keyDigit="8" />
-        <Key innerText="9" handleKeyPress={handleKeyPress} keyDigit="9" />
+        <Key
+          innerText="7"
+          keyDigit="7"
+          key="7"
+        />
+        <Key
+          innerText="8"
+          keyDigit="8"
+          key="8"
+        />
+        <Key
+          innerText="9"
+          keyDigit="9"
+          key="9"
+        />
         <Key
           innerText="+"
-          type="operation"
-          handleKeyPress={handleKeyPress}
+          style="operation"
           keyDigit="+"
+          key="+"
         />
       </View>
       <View style={style.keyRow}>
-        <Key innerText="." handleKeyPress={handleKeyPress} keyDigit="." />
-        <Key innerText="0" handleKeyPress={handleKeyPress} keyDigit="0" />
-        <Key innerText="," handleKeyPress={handleKeyPress} keyDigit="," />
+        <Key
+          innerText="."
+          keyDigit="."
+          key="."
+        />
+        <Key
+          innerText="0"
+          keyDigit="0"
+          key="0"
+        />
+        <Key
+          innerText=","
+          keyDigit=","
+          key=","
+        />
         <Key
           innerText={"="}
-          type="equal"
-          handleKeyPress={handleKeyPress}
+          style="equal"
           keyDigit="equal"
+          key="equal"
         />
       </View>
     </View>
   );
 }
+
+export default KeyBoard;
 
 const style = StyleSheet.create({
   keyRow: {
