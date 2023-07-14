@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, memo } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import { Shadow } from "react-native-shadow-2";
 import { LinearGradient } from "expo-linear-gradient";
@@ -17,18 +17,10 @@ function Key({ innerText, style = "normal", keyDigit }) {
 
   const { dispatch } = useContext(AppContext);
 
-  const handleKeyPress = (key) => {
-    if (keyDigit == "equal") {
-      dispatch({ type: "equal" });
-    } else if (keyDigit == "bksp") {
-      dispatch({ type: "bksp" });
-    } else if (keyDigit == "percent") {
-      dispatch({ type: "percent" });
-    } else if (keyDigit == "clear") {
-      dispatch({ type: "clear" });
-    } else {
-      dispatch({ type: "number", payload: key });
-    }
+  console.log("Tecla re-rederizada: ", keyDigit);
+
+  const handleKeyPress = () => {
+    dispatch({ type: keyDigit });
   };
 
   return (
@@ -37,7 +29,7 @@ function Key({ innerText, style = "normal", keyDigit }) {
         activeOpacity={0.6}
         style={{ borderRadius: 30 }}
         underlayColor="#ddd"
-        onPress={() => handleKeyPress(keyDigit)}
+        onPress={() => handleKeyPress()}
       >
         <Shadow
           style={styles.shadowContainer}
@@ -60,7 +52,9 @@ function Key({ innerText, style = "normal", keyDigit }) {
   );
 }
 
-export default Key;
+export default memo(Key, (p, n) => {
+  return p.innerText == n.innerText
+});
 
 const styles = StyleSheet.create({
   shadowContainer: {
