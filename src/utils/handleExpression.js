@@ -1,5 +1,6 @@
+import { evaluate } from "./evaluate";
 function addDigit(state, action) {
-  let lastChar = state.expression.slice(-1);
+  const lastChar = state.expression.slice(-1);
   if (lastChar == "." || lastChar == ",") {
     if (action.type == "." || action.type == ",") {
       return { ...state, expression: state.expression };
@@ -23,4 +24,26 @@ function clear(state, action) {
   };
 }
 
-export { addDigit, backspace, clear };
+function percent(state, action) {
+  const symbols = ["+", "-", "*", "/"];
+  let lastSymbol = -1;
+
+  for (let i = 0; i < state.expression.length; i++) {
+    if (symbols.includes(state.expression[i])) {
+      lastSymbol = i;
+    }
+  }
+
+  const lastNumber = state.expression.substring(lastSymbol);
+  const allBeforeLastNumber = state.expression.substring(0, lastSymbol);
+  const percentOfAll = evaluate(allBeforeLastNumber) * (lastNumber / 100);
+
+  return {
+    ...state,
+    expression:
+      allBeforeLastNumber +
+      (percentOfAll > 0 ? "+" + percentOfAll : percentOfAll),
+  };
+}
+
+export { addDigit, backspace, clear, percent };
