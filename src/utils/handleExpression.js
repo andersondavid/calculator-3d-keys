@@ -9,4 +9,11 @@ function addDigit(state, action) {
   return { ...state, expression: state.expression + action.type };
 }
 
-export { addDigit };
+function backspace(state, action) {
+  return {
+    ...state,
+    expression: state.expression.slice(0, -1),
+  };
+}
+
+export { addDigit, backspace };
