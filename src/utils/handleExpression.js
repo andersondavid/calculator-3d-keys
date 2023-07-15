@@ -16,4 +16,11 @@ function backspace(state, action) {
   };
 }
 
-export { addDigit, backspace };
+function clear(state, action) {
+  return {
+    ...state,
+    expression: "",
+  };
+}
+
+export { addDigit, backspace, clear };
